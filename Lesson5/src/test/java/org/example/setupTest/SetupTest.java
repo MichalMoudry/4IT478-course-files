@@ -14,6 +14,7 @@ public class SetupTest {
     @Parameters({"browser"})
     protected void setupSuite(String browser)
     {
+        System.setProperty("webdriver.chrome.driver", "/Users/michalmoudry/Downloads/edgedriver_mac64_m1/msedgedriver");
         switch (browser) {
             case "chrome" -> WebDriverManager.chromedriver().setup();
             case "edge" -> WebDriverManager.edgedriver().setup();
