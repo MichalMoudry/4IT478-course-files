@@ -2,6 +2,7 @@ package org.example.test;
 
 import org.example.setupTest.SetupTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

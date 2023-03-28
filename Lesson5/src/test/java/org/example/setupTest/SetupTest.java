@@ -5,35 +5,29 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.annotations.*;
+
+import java.time.Duration;
 
 public class SetupTest {
     protected static WebDriver webDriver;
 
     @BeforeSuite
-    @Parameters({"browser"})
-    protected void setupSuite(String browser)
+    protected void setupSuite()
     {
-        System.setProperty("webdriver.chrome.driver", "/Users/michalmoudry/Downloads/edgedriver_mac64_m1/msedgedriver");
-        switch (browser) {
-            case "chrome" -> WebDriverManager.chromedriver().setup();
-            case "edge" -> WebDriverManager.edgedriver().setup();
-            default -> throw new IllegalArgumentException("Invalid browser: " + browser);
-        }
+        System.setProperty("webdriver.edge.driver", "");
     }
 
     @BeforeMethod
-    @Parameters({"browser"})
-    protected void setupTest(String browser)
+    protected void setupTest()
     {
-        if (browser.equals("chrome"))
-        {
-            var chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--remote-allow-origins=*");
-            webDriver = new ChromeDriver(chromeOptions);
-        } else if (browser.equals("edge")) {
-            webDriver = new EdgeDriver();
-        }
+        var options = new EdgeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--headless");
+        webDriver = new EdgeDriver(options);
+        webDriver.manage().window().maximize();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     @AfterSuite
